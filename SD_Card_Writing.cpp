@@ -32,22 +32,22 @@ int SD_Card_Writing::write()
     return 0;
 }
 
-int prepare_card()
+int SD_Card_Writing::prepare_card()
 {
     return 0;
 }
 
-void set_filename_root(str filename)
+void SD_Card_Writing::set_filename_root(str filename)
 {
     _file_root = filename;
 }
 
-void set_file_header(str header)
+void SD_Card_Writing::set_file_header(str header)
 {
     _file_header = header;
 }
 
-void set_file_format(str format)
+void SD_Card_Writing::set_file_format(str format)
 {
     _file_format = format;
 }

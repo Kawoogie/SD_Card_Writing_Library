@@ -46,9 +46,11 @@ class SD_Card_Writing {
     int unmount_system();
 
     private:
-    float _file_root;
-    float _file_header;
-    float _file_format;
+    string _file_root;
+    string _file_header;
+    string _file_format;
+    string _file_name;
+
     int _remove_system_file();
 
 };
