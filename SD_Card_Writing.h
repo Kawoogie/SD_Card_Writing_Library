@@ -31,20 +31,25 @@ class SD_Card_Writing {
     public:
     SD_Card_Writing();
     int write();
+    int prepare_card();
+    void set_filename_root(str filename);
+    void set_file_header(str header);
+    void set_file_format(str format);
+
 
     void print_file_names();
     string open_new_file();
 
-    int remove_system_file();
     void read_file_names(char *dir);
     int sd_card_check();
     int mount_file_system();
     int unmount_system();
 
-
-
     private:
-
+    float _file_root;
+    float _file_header;
+    float _file_format;
+    int _remove_system_file();
 
 };
 

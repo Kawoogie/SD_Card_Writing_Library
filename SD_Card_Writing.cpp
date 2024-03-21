@@ -1,6 +1,5 @@
 #include "SD_Card_Writing.h"
 
-
 // File Prefix and header
 #define FILE_PREFIX "MAXM86161_Data_"
 #define FILE_HEADER "red, green, ir, force,\n"
@@ -25,11 +24,32 @@ vector<string> filenames;
 
 SD_Card_Writing::SD_Card_Writing()
 {
+
 }
 
 int SD_Card_Writing::write()
 {
     return 0;
+}
+
+int prepare_card()
+{
+    return 0;
+}
+
+void set_filename_root(str filename)
+{
+    _file_root = filename;
+}
+
+void set_file_header(str header)
+{
+    _file_header = header;
+}
+
+void set_file_format(str format)
+{
+    _file_format = format;
 }
 
 void SD_Card_Writing::print_file_names()
@@ -71,19 +91,6 @@ string SD_Card_Writing::open_new_file()
     return file_path;
 }
 
-int SD_Card_Writing::remove_system_file()
-{
-    char* system_file = (char*) "System Volume Information";
-    int found = false;
-    // Code to find the system file. Code removes the system_file name from the list of files.
-    if (std::find(filenames.begin(), filenames.end(), system_file) != filenames.end()) {
-        vector<string>::iterator new_end; 
-        new_end = remove(filenames.begin(), filenames.end(), system_file);  // Returns index of last value not removed. Not needed for my code
-         found = true;
-         }
-    return found;
-}
-
 void SD_Card_Writing::read_file_names(char *dir)
 {
     DIR *dp;
@@ -120,5 +127,16 @@ int SD_Card_Writing::unmount_system()
     return err;
 }
 
-
+int SD_Card_Writing::_remove_system_file()
+{
+    char* system_file = (char*) "System Volume Information";
+    int found = false;
+    // Code to find the system file. Code removes the system_file name from the list of files.
+    if (std::find(filenames.begin(), filenames.end(), system_file) != filenames.end()) {
+        vector<string>::iterator new_end; 
+        new_end = remove(filenames.begin(), filenames.end(), system_file);  // Returns index of last value not removed. Not needed for my code
+         found = true;
+         }
+    return found;
+}
 
