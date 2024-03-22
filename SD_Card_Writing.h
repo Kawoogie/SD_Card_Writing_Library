@@ -30,7 +30,7 @@
 class SD_Card_Writing {
     public:
     SD_Card_Writing();
-    int write();
+    int write(int &data1, int &data2, int &data3);
     int prepare_card();
     void set_filename_root(string &filename);
     void set_file_header(string &header);

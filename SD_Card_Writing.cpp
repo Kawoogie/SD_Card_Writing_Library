@@ -29,9 +29,37 @@ SD_Card_Writing::SD_Card_Writing()
     _file_path = "/fs/";
 }
 
-int SD_Card_Writing::write()
+int SD_Card_Writing::write(int &data1, int &data2, int &data3)
 {
-    return 0;
+    int status;
+
+    // Open the file
+    FILE *f = fopen(_file_name, "r+");
+
+    // Flush the output and seek to the location
+    // on the file
+    fflush(stdout);
+    status = fseek(f, 0, SEEK_SET);
+
+    if (status){
+        fclose(f);
+        return status;
+    }
+
+    // Write the data to the file
+    fflush(stdout);
+    status = fprintf(f, "%d, %d, %d,\n", data1, data2, data3);
+
+    if (status < 0){
+        fclose(f);
+        return status;
+    }
+
+    // Close the file which also flushes any cached writes
+    fflush(stdout);
+    status = fclose(f);
+
+    return status;
 }
 
 int SD_Card_Writing::prepare_card()
