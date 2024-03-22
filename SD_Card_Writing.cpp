@@ -80,7 +80,7 @@ int SD_Card_Writing::prepare_card()
 
     // Write the data file header
     fflush(stdout);
-    status = fprintf(f, _file_header);
+    status = fprintf(f, _file_header.c_str());
 
     if (status){
         return status;
@@ -165,7 +165,7 @@ int SD_Card_Writing::sd_card_check()
         return 0;
     }
     else{
-        return 1
+        return 1;
     }
 }
 
