@@ -93,17 +93,17 @@ int SD_Card_Writing::prepare_card()
     return status;
 }
 
-void SD_Card_Writing::set_filename_root(str filename)
+void SD_Card_Writing::set_filename_root(string filename)
 {
     _file_root = filename;
 }
 
-void SD_Card_Writing::set_file_header(str header)
+void SD_Card_Writing::set_file_header(string header)
 {
     _file_header = header;
 }
 
-void SD_Card_Writing::set_file_format(str format)
+void SD_Card_Writing::set_file_format(string format)
 {
     _file_format = format;
 }
