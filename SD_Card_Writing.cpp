@@ -24,6 +24,7 @@ vector<string> filenames;
 
 SD_Card_Writing::SD_Card_Writing()
 {
+    // Set the default file format and path
     _file_format = ".csv";
     _file_path = "/fs/";
 }
@@ -57,16 +58,17 @@ int SD_Card_Writing::prepare_card()
     // Get the next available file name
     new_file = open_new_file();
 
-    // Set the file location
-    file_location = new_file.c_str();
+    // Set the file location and name to be opened
+    _file_name = new_file.c_str();
+
 
     // Open the file
-    FILE *f = fopen(file_location, "r+");
+    FILE *f = fopen(_file_name, "r+");
     
     // Create the file if it doesn't exist
     if (!f) {
         fflush(stdout);
-        f = fopen(file_location, "w+");
+        f = fopen(_file_name, "w+");
     }
 
     // Flush the output and seek to the location
@@ -80,7 +82,11 @@ int SD_Card_Writing::prepare_card()
 
     // Write the data file header
     fflush(stdout);
-    fprintf(f, _file_header.c_str());
+    status = fprintf(f, _file_header.c_str());
+
+    if (status < 0){
+        return status;
+    }
 
     // Close the file which also flushes any cached writes
     fflush(stdout);

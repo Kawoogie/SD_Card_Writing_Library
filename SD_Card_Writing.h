@@ -46,11 +46,11 @@ class SD_Card_Writing {
     int unmount_system();
 
     private:
-    string _file_root;
-    string _file_path;
-    string _file_header;
-    string _file_format;
-    string _file_name;
+    string _file_root;  // Root name of the file path
+    string _file_path;  // File path to be saved
+    string _file_header;  // First row of file to be printed
+    string _file_format;  // Format of saved file, default .csv
+    string _file_name;  // Full save location and name of file
 
     int _remove_system_file();
 
