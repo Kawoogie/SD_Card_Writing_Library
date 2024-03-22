@@ -37,7 +37,7 @@ class SD_Card_Writing {
     void set_file_format(str format);
 
 
-    void print_file_names();
+    // void print_file_names();
     string open_new_file();
 
     void read_file_names(char *dir);
@@ -47,6 +47,7 @@ class SD_Card_Writing {
 
     private:
     string _file_root;
+    string _file_path;
     string _file_header;
     string _file_format;
     string _file_name;

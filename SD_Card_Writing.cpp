@@ -1,9 +1,9 @@
 #include "SD_Card_Writing.h"
 
 // File Prefix and header
-#define FILE_PREFIX "MAXM86161_Data_"
-#define FILE_HEADER "red, green, ir, force,\n"
-#define FILE_FORMAT ".csv"
+// #define FILE_PREFIX "MAXM86161_Data_"
+// #define FILE_HEADER "red, green, ir, force,\n"
+// #define FILE_FORMAT ".csv"
 
 // Properties for the SD card logging
 #define BUFFER_MAX_LEN 10
@@ -24,7 +24,8 @@ vector<string> filenames;
 
 SD_Card_Writing::SD_Card_Writing()
 {
-
+    _file_format = ".csv";
+    _file_path = "/fs/";
 }
 
 int SD_Card_Writing::write()
@@ -79,7 +80,7 @@ int SD_Card_Writing::prepare_card()
 
     // Write the data file header
     fflush(stdout);
-    status = fprintf(f, FILE_HEADER);
+    status = fprintf(f, _file_header);
 
     if (status){
         return status;
@@ -107,15 +108,15 @@ void SD_Card_Writing::set_file_format(str format)
     _file_format = format;
 }
 
-void SD_Card_Writing::print_file_names()
-{
-    serial.printf("File names:\n");
-    for(vector<string>::iterator it=filenames.begin(); it < filenames.end(); it++)  
-    {
-        serial.printf("%s\n\r",(*it).c_str());
-    }
-    serial.printf("\n");
-}
+// void SD_Card_Writing::print_file_names()
+// {
+//     serial.printf("File names:\n");
+//     for(vector<string>::iterator it=filenames.begin(); it < filenames.end(); it++)  
+//     {
+//         serial.printf("%s\n\r",(*it).c_str());
+//     }
+//     serial.printf("\n");
+// }
 
 string SD_Card_Writing::open_new_file()
 {
@@ -126,10 +127,10 @@ string SD_Card_Writing::open_new_file()
     while (!file_name_found){
 
         // Convert the int to a string
-        string name = FILE_PREFIX;
+        string name = _file_root;
         name.append(to_string(file_number));
         // Construct the file name
-        name.append(FILE_FORMAT);
+        name.append(_file_format);
 
         // Search for the string inside the vector of file names on the SD card.
         if ( std::find(filenames.begin(), filenames.end(), name) != filenames.end() ){
@@ -140,7 +141,7 @@ string SD_Card_Writing::open_new_file()
     }
     // Open the file data will be saved in
     // Construct the file name and path
-    string file_path = "/fs/";
+    string file_path = _file_path;
     file_path.append(file_name);
 
     return file_path;
