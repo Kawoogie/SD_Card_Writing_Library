@@ -32,9 +32,9 @@ class SD_Card_Writing {
     SD_Card_Writing();
     int write();
     int prepare_card();
-    void set_filename_root(string filename);
-    void set_file_header(string header);
-    void set_file_format(string format);
+    void set_filename_root(string &filename);
+    void set_file_header(string &header);
+    void set_file_format(string &format);
 
 
     // void print_file_names();
