@@ -62,7 +62,7 @@ int SD_Card_Writing::prepare_card()
 
     // Open the file
     FILE *f = fopen(file_location, "r+");
-
+    
     // Create the file if it doesn't exist
     if (!f) {
         fflush(stdout);
@@ -80,11 +80,7 @@ int SD_Card_Writing::prepare_card()
 
     // Write the data file header
     fflush(stdout);
-    status = fprintf(f, _file_header.c_str());
-
-    if (status){
-        return status;
-    }
+    fprintf(f, _file_header.c_str());
 
     // Close the file which also flushes any cached writes
     fflush(stdout);
