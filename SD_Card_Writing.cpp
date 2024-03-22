@@ -34,7 +34,62 @@ int SD_Card_Writing::write()
 
 int SD_Card_Writing::prepare_card()
 {
-    return 0;
+    int status;
+    char* sd_directory = (char*) "/fs";
+    int file_removed = false;
+    string new_file;
+    const char* file_location;
+
+    // Check if there is an SD card in place
+    status = sd_card_check();
+
+    if (status){
+        return status;
+    }
+
+    // Read the names of the files on the card
+    read_file_names(sd_directory);
+
+    // Remove the system file from the list of files
+    file_removed = _remove_system_file();
+
+    // Get the next available file name
+    new_file = open_new_file();
+
+    // Set the file location
+    file_location = new_file.c_str();
+
+    // Open the file
+    FILE *f = fopen(file_location, "r+");
+
+    // Create the file if it doesn't exist
+    if (!f) {
+        fflush(stdout);
+        f = fopen(file_location, "w+");
+    }
+
+    // Flush the output and seek to the location
+    // on the file
+    fflush(stdout);
+    status = fseek(f, 0, SEEK_SET);
+
+    if (status){
+        return status;
+    }
+
+    // Write the data file header
+    fflush(stdout);
+    status = fprintf(f, FILE_HEADER);
+
+    if (status){
+        return status;
+    }
+
+    // Close the file which also flushes any cached writes
+    fflush(stdout);
+    status = fclose(f);
+
+    return status;
 }
 
 void SD_Card_Writing::set_filename_root(str filename)
